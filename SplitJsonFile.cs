@@ -65,12 +65,14 @@ public class SplitJsonFile : MonoBehaviour
                 Debug.Log(textLines[tagOrder[i] + 5]);
                 Debug.Log(ConvertTofloat(textLines[tagOrder[i] + 5]));
                 temp.boundingBox = new BoundingBox();
-                temp.boundingBox.left = 0.5f;
+                temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 5]);
+                temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 7]);
+                temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 9]);
+                temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 11]);
                 Debug.Log(temp.boundingBox.left);
                 predictions.Add(temp);
             }
             FindBestTag(predictions);
-            Debug.Log(predictions[0].boundingBox.left);
         }
     }
 
@@ -90,7 +92,7 @@ public class SplitJsonFile : MonoBehaviour
         {
             // Sort the predictions to locate the highest one
             List<Prediction> sortedPredictions = new List<Prediction>();
-            sortedPredictions = predictions.OrderByDescending(p => p.probability).ToList();
+            sortedPredictions = predictions.OrderBy(p => p.probability).ToList();
             Prediction bestPrediction = new Prediction();
             bestPrediction = sortedPredictions[0];
 
@@ -99,6 +101,7 @@ public class SplitJsonFile : MonoBehaviour
                 if (sortedPredictions[i].probability > probabilityThreshold)
                 {
                     Debug.Log(sortedPredictions[i].tagName + ", " + sortedPredictions[i].probability);
+                    SelectTagName.Instance.AddTagList(sortedPredictions[i]);
                 }
             }
 

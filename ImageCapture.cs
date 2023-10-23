@@ -67,6 +67,8 @@ public class ImageCapture : MonoBehaviour
     /// </summary>
     public void TapHandler()
     {
+        Debug.Log("TapHandler");
+        CheckText.Instance.SetStatus("TapHandler");
         if (!captureIsActive)
         {
             captureIsActive = true;
