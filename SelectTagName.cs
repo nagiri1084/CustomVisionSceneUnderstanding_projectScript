@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class SelectTagName : MonoBehaviour
 {
     public static SelectTagName Instance;
-    private int yValue = -10;
-    public Image tagItem;
+    private float yValue = -10;
+    [SerializeField] public RectTransform tagItem;
     [SerializeField] private ScrollRect scroll;
 
     /// <summary>
@@ -21,10 +21,12 @@ public class SelectTagName : MonoBehaviour
     public void AddTagList(Prediction TagName)
     {
         var addTagItem = Instantiate(tagItem, scroll.content);
+        addTagItem.anchoredPosition = new Vector2(0, yValue);
         GameObject tagItemName = addTagItem.transform.GetChild(0).gameObject;
 
         tagItemName.GetComponent<Text>().text = TagName.tagName+": "+TagName.probability;
         Debug.Log(yValue);
-        yValue -= 20;
+        yValue -= 20; ;
+        //yValue -= addTagItem.sizeDelta.y; ;
     }
 }
