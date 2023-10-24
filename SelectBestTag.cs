@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class SelectBestTag : MonoBehaviour
 {
-    /// <summary>
-    /// Allows this class to behave like a singleton
-    /// </summary>
-    public static SelectBestTag Instance;
     private int tagIndex;
 
     public void ChooseButton()

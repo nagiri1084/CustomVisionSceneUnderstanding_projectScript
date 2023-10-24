@@ -68,12 +68,63 @@ public class SceneOrganiser : MonoBehaviour
         // Add the CustomVisionObjects class to this Gameobject
         gameObject.AddComponent<CustomVisionObjects>();
 
+        // Create the camera Cursor
+        cursor = CreateCameraCursor();
+
+        // Load the label prefab as reference
+        label = CreateLabel();
+
         // Create the camera status indicator label, and place it above where predictions
         // and training UI will appear.
         cameraStatusIndicator = CreateTrainingUI("Status Indicator", 0.02f, -0.2f, 3, true);
 
         // Set camera status indicator to loading.
         SetCameraStatus("Loading");
+    }
+
+    /// <summary>
+    /// Spawns cursor for the Main Camera
+    /// </summary>
+    private GameObject CreateCameraCursor()
+    {
+        // Create a sphere as new cursor
+        GameObject newCursor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+
+        // Attach it to the camera
+        newCursor.transform.parent = gameObject.transform;
+
+        // Resize the new cursor
+        newCursor.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+
+        // Move it to the correct position
+        newCursor.transform.localPosition = new Vector3(0, 0, 4);
+
+        // Set the cursor color to red
+        newCursor.GetComponent<Renderer>().material = new Material(Shader.Find("Diffuse"));
+        newCursor.GetComponent<Renderer>().material.color = Color.green;
+
+        return newCursor;
+    }
+
+    /// <summary>
+    /// Create the analysis label object
+    /// </summary>
+    private GameObject CreateLabel()
+    {
+        // Create a sphere as new cursor
+        GameObject newLabel = new GameObject();
+
+        // Resize the new cursor
+        newLabel.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+
+        // Creating the text of the label
+        TextMesh t = newLabel.AddComponent<TextMesh>();
+        t.anchor = TextAnchor.MiddleCenter;
+        t.alignment = TextAlignment.Center;
+        t.fontSize = 50;
+        t.text = "";
+
+        return newLabel;
     }
 
     /// <summary>
@@ -174,7 +225,6 @@ public class SceneOrganiser : MonoBehaviour
     /// </summary>
     public void FinaliseLabel(Prediction bestPrediction)
     {
-        Debug.Log("FinaliseLabel:"+bestPrediction.tagName);
         CheckText.Instance.SetStatus("FinaliseLabel1");
         if (bestPrediction != null)
         {

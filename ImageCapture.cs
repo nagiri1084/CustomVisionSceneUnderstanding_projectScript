@@ -24,7 +24,7 @@ public class ImageCapture : MonoBehaviour
     /// <summary>
     /// Flagging if the capture loop is running
     /// </summary>
-    internal bool captureIsActive;
+    internal bool captureIsActive = false;
 
     /// <summary>
     /// File path of current analysed photo
@@ -68,13 +68,15 @@ public class ImageCapture : MonoBehaviour
     public void TapHandler()
     {
         Debug.Log("TapHandler");
-        CheckText.Instance.SetStatus("TapHandler");
+        CheckText.Instance.SetStatus("TapHandler1");
         if (!captureIsActive)
         {
+            CheckText.Instance.SetStatus("TapHandler2");
             captureIsActive = true;
 
             // Set the cursor color to red
             SceneOrganiser.Instance.cursor.GetComponent<Renderer>().material.color = Color.red;
+            CheckText.Instance.SetStatus("TapHandler3");
 
             // Update camera status to looping capture.
             SceneOrganiser.Instance.SetCameraStatus("Looping Capture");

@@ -24,6 +24,7 @@ public class CreateTagList : MonoBehaviour
 
     public void AddTagList(List<Prediction> TagList)
     {
+        CheckText.Instance.SetStatus("AddTagList");
         if (TagList != null)
         {
             selectPredictions = TagList;
@@ -36,7 +37,7 @@ public class CreateTagList : MonoBehaviour
 
                 tagItemName.GetComponent<Text>().text = TagList[i].tagName + ": " + TagList[i].probability;
                 tagItemButtonTexts.GetComponent<Text>().text = i.ToString();
-                Debug.Log(yValue);
+                //Debug.Log(yValue);
                 yValue -= 20;
                 //yValue -= addTagItem.sizeDelta.y; ;
             }
@@ -45,11 +46,13 @@ public class CreateTagList : MonoBehaviour
     
     public void SendChooseTag()
     {
+        CheckText.Instance.SetStatus("SendChooseTag");
         Debug.Log(tagIndex);
         if (selectPredictions != null && tagIndex != 0)
         {
             Debug.Log(selectPredictions[tagIndex].tagName);
             SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex]);
+            CheckText.Instance.SetStatus(selectPredictions[tagIndex].tagName+", "+selectPredictions[tagIndex].probability.ToString());
         }
     }
 }

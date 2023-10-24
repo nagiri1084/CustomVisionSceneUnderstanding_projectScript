@@ -105,7 +105,6 @@ public class CustomVisionAnalyser : MonoBehaviour
         if (jsonFileData != null)
         {
             List<string> textLines = new List<string>();
-            List<string> findTagName = new List<string>();
             List<int> tagOrder = new List<int>();
             List<Prediction> predictions = new List<Prediction> { };
 
@@ -158,25 +157,29 @@ public class CustomVisionAnalyser : MonoBehaviour
             // Sort the predictions to locate the highest one
             List<Prediction> sortedPredictions = new List<Prediction>();
             sortedPredictions = predictions.OrderByDescending(p => p.probability).ToList();
-            Prediction bestPrediction = new Prediction();
-            bestPrediction = sortedPredictions[0];
-
-            for (int i = 0; i < sortedPredictions.Count; i++)
-            {
-                if (sortedPredictions[i].probability > probabilityThreshold)
-                {
-                    Debug.Log(sortedPredictions[i].tagName + ", " + sortedPredictions[i].probability);
-                }
-            }
-            CheckText.Instance.SetStatus(sortedPredictions[0].tagName + ", " + sortedPredictions[0].probability);
-
-            if (bestPrediction != null)
-            {
-                SceneOrganiser.Instance.FinaliseLabel(bestPrediction);
-                CheckText.Instance.SetStatus(bestPrediction.tagName+", "+bestPrediction.boundingBox.left);
-            }
-            else
-                CheckText.Instance.SetStatus("analysisRootObject Null");
+            //sortedPredictions = predictions.OrderBy(p => p.probability).ToList();
+            CreateTagList.Instance.AddTagList(sortedPredictions);
+            CheckText.Instance.SetStatus("FindBestTag");
+            //
+            //Prediction bestPrediction = new Prediction();
+            //bestPrediction = sortedPredictions[0];
+            //
+            //for (int i = 0; i < sortedPredictions.Count; i++)
+            //{
+            //    if (sortedPredictions[i].probability > probabilityThreshold)
+            //    {
+            //        Debug.Log(sortedPredictions[i].tagName + ", " + sortedPredictions[i].probability);
+            //    }
+            //}
+            //CheckText.Instance.SetStatus(sortedPredictions[0].tagName + ", " + sortedPredictions[0].probability);
+            //
+            //if (bestPrediction != null)
+            //{
+            //    SceneOrganiser.Instance.FinaliseLabel(bestPrediction);
+            //    CheckText.Instance.SetStatus(bestPrediction.tagName+", "+bestPrediction.boundingBox.left);
+            //}
+            //else
+            //    CheckText.Instance.SetStatus("analysisRootObject Null");
         }
     }
 }

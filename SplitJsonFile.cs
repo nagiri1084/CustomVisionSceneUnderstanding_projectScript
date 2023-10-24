@@ -36,7 +36,6 @@ public class SplitJsonFile : MonoBehaviour
         if (jsonFileData != null)
         {
             List<string> textLines = new List<string>();
-            List<string> findTagName = new List<string>();
             List<int> tagOrder = new List<int>();
             List<Prediction> predictions = new List<Prediction> { };
 
