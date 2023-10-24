@@ -95,13 +95,13 @@ public class SplitJsonFile : MonoBehaviour
             sortedPredictions = predictions.OrderBy(p => p.probability).ToList();
             Prediction bestPrediction = new Prediction();
             bestPrediction = sortedPredictions[0];
+            CreateTagList.Instance.AddTagList(sortedPredictions);
 
             for (int i = 0; i < sortedPredictions.Count; i++)
             {
                 if (sortedPredictions[i].probability > probabilityThreshold)
                 {
                     Debug.Log(sortedPredictions[i].tagName + ", " + sortedPredictions[i].probability);
-                    SelectTagName.Instance.AddTagList(sortedPredictions[i]);
                 }
             }
 
