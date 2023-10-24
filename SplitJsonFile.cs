@@ -8,8 +8,6 @@ using System.Linq;
 
 public class SplitJsonFile : MonoBehaviour
 {
-
-
     /// <summary>
     /// Allows this class to behave like a singleton
     /// </summary>

@@ -7,11 +7,11 @@ public class CreateTagList : MonoBehaviour
 {
     public static CreateTagList Instance;
     private float yValue = -10;
-    private int tagIndex = 0;
+    private int i = 0;
+    public int tagIndex = 0;
     [SerializeField] public RectTransform tagItem;
     [SerializeField] private ScrollRect scroll;
-    private GameObject tagItemButton;
-    List<Prediction> selectPredictions = new List<Prediction>();
+    private List<Prediction> selectPredictions = new List<Prediction>();
 
     /// <summary>
     /// Initializes this class
@@ -21,34 +21,35 @@ public class CreateTagList : MonoBehaviour
         // Allows this instance to behave like a singleton
         Instance = this;
     }
-    public void AddTagList(List<Prediction> TagName)
+
+    public void AddTagList(List<Prediction> TagList)
     {
-        if (TagName != null)
+        if (TagList != null)
         {
-            selectPredictions = TagName;
-            while (TagName[tagIndex] != null)
+            selectPredictions = TagList;
+            for (int i = 0; i < TagList.Count; i++) 
             {
                 var addTagItem = Instantiate(tagItem, scroll.content);
                 addTagItem.anchoredPosition = new Vector2(0, yValue);
                 GameObject tagItemName = addTagItem.transform.GetChild(0).gameObject;
-                tagItemButton = addTagItem.transform.GetChild(1).GetChild(0).gameObject;
+                GameObject tagItemButtonTexts = addTagItem.transform.GetChild(1).GetChild(0).gameObject;
 
-                tagItemName.GetComponent<Text>().text = TagName[tagIndex].tagName + ": " + TagName[tagIndex].probability;
-                tagItemButton.GetComponent<Text>().text = tagIndex.ToString();
+                tagItemName.GetComponent<Text>().text = TagList[i].tagName + ": " + TagList[i].probability;
+                tagItemButtonTexts.GetComponent<Text>().text = i.ToString();
                 Debug.Log(yValue);
                 yValue -= 20;
-                tagIndex++;
                 //yValue -= addTagItem.sizeDelta.y; ;
             }
         }
     }
-    //
-    //public void SelectBestTag()
-    //{
-    //    if (selectPredictions != null)
-    //    {
-    //        int i = int.Parse(tagItemButton.GetComponent<Text>().text);
-    //        SceneOrganiser.Instance.FinaliseLabel(selectPredictions[i]);
-    //    }
-    //}
+    
+    public void SendChooseTag()
+    {
+        Debug.Log(tagIndex);
+        if (selectPredictions != null && tagIndex != 0)
+        {
+            Debug.Log(selectPredictions[tagIndex].tagName);
+            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex]);
+        }
+    }
 }

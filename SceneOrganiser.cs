@@ -174,6 +174,7 @@ public class SceneOrganiser : MonoBehaviour
     /// </summary>
     public void FinaliseLabel(Prediction bestPrediction)
     {
+        Debug.Log("FinaliseLabel:"+bestPrediction.tagName);
         CheckText.Instance.SetStatus("FinaliseLabel1");
         if (bestPrediction != null)
         {
