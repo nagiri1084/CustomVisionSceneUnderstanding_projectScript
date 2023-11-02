@@ -63,10 +63,10 @@ public class SplitJsonFile : MonoBehaviour
                 Debug.Log(ConvertTofloat(textLines[tagOrder[i] + 5]));
                 temp.boundingBox = new BoundingBox();
                 temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 5]);
-                temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 7]);
-                temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 9]);
-                temp.boundingBox.left = ConvertTofloat(textLines[tagOrder[i] + 11]);
-                Debug.Log(temp.boundingBox.left);
+                temp.boundingBox.top = ConvertTofloat(textLines[tagOrder[i] + 7]);
+                temp.boundingBox.width = ConvertTofloat(textLines[tagOrder[i] + 9]);
+                temp.boundingBox.height = ConvertTofloat(textLines[tagOrder[i] + 11]);
+                Debug.Log(temp.boundingBox);
                 predictions.Add(temp);
             }
             FindBestTag(predictions);

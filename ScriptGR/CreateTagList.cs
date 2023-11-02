@@ -24,7 +24,7 @@ public class CreateTagList : MonoBehaviour
 
     public void AddTagList(List<Prediction> TagList)
     {
-        CheckText.Instance.SetStatus("AddTagList");
+        //CheckText.Instance.SetStatus("AddTagList");
         if (TagList != null)
         {
             selectPredictions = TagList;
