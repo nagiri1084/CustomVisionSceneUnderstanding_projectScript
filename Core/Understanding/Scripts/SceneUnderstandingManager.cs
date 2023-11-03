@@ -45,16 +45,20 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         #region Public Variables
 
         [Header("Data Loader Mode")]
-        [Tooltip("When enabled, the scene will be queried from a device (e.g Hololens). Otherwise, a previously saved, serialized scene will be loaded and served from your PC.")] //환경을 디바이스에서 쿼리할지 여부 표시. true로 설정하면 디바이스에서 환경을 쿼리하고, false로 설정하면 미리 저장된 시리얼라이즈된 환경을 로드
+        [Tooltip("When enabled, the scene will be queried from a device (e.g Hololens). Otherwise, a previously saved, serialized scene will be loaded and served from your PC." +
+            "환경을 디바이스에서 쿼리할지 여부 표시. true로 설정하면 디바이스에서 환경을 쿼리하고, false로 설정하면 미리 저장된 시리얼라이즈된 환경을 로드")] 
         public bool QuerySceneFromDevice = true;
-        [Tooltip("The scene to load when not running on the device (e.g SU_Kitchen in Resources/SerializedScenesForPCPath).")]
+        [Tooltip("The scene to load when not running on the device (e.g SU_Kitchen in Resources/SerializedScenesForPCPath)." +
+            "환경 데이터를 미리 저장한 경우, 그 경로를 지정할 수 있는 변수")]
         public List<TextAsset> SUSerializedScenePaths = new List<TextAsset>(0);
 
         [Header("Root GameObject")]
-        [Tooltip("GameObject that will be the parent of all Scene Understanding related game objects. If field is left empty an empty gameobject named 'Root' will be created.")]
+        [Tooltip("GameObject that will be the parent of all Scene Understanding related game objects. If field is left empty an empty gameobject named 'Root' will be created." +
+            "모든 Scene Understanding 관련 게임 오브젝트의 부모가 될 게임 오브젝트를 설정하는 변수")]
         public GameObject SceneRoot = null;
 
-        [Header("On Device Request Settings")]
+        [Header("On Device Request Settings" +
+            "디바이스에서 환경 데이터를 쿼리할 때 사용되는 설정. 이 설정에는 환경을 쿼리할 때 사용되는 구의 반경, 자동 업데이트 간격 등을 포함")]
         [Tooltip("Radius of the sphere around the camera, which is used to query the environment.")]
         [Range(5f, 100f)]
         public float BoundingSphereRadiusInMeters = 10.0f;
@@ -64,15 +68,15 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Range(1f, 60f)]
         public float AutoRefreshIntervalInSeconds = 10.0f;
 
-        [Header("Request Settings")]
-        [Tooltip("Type of visualization to use for scene objects.")]
+        [Header("Request Settings 환경 데이터 쿼리와 관련된 시각화 및 상세 설정")]
+        [Tooltip("Type of visualization to use for scene objects. 씬 오브젝트의 시각화 유형")]
         public RenderMode SceneObjectRequestMode = RenderMode.Mesh;
-        [Tooltip("Level Of Detail for the scene objects.")]
+        [Tooltip("Level Of Detail for the scene objects. 메시의 레벨 오브 디테일")]
         public SceneUnderstanding.SceneMeshLevelOfDetail MeshQuality = SceneUnderstanding.SceneMeshLevelOfDetail.Medium;
-        [Tooltip("When enabled, requests observed and inferred regions for scene objects. When disabled, requests only the observed regions for scene objects.")]
+        [Tooltip("When enabled, requests observed and inferred regions for scene objects. When disabled, requests only the observed regions for scene objects. 추론된 영역 포함 여부")]
         public bool RequestInferredRegions = true;
 
-        [Header("Render Colors")]
+        [Header("Render Colors 시각화 요소에 사용되는 색상을 설정")]
         [Tooltip("Colors for the Scene Understanding Background objects")]
         public Color ColorForBackgroundObjects = new Color(0.953f, 0.475f, 0.875f, 1.0f);
         [Tooltip("Colors for the Scene Understanding Wall objects")]
@@ -90,7 +94,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Tooltip("Colors for the World mesh")]
         public Color ColorForWorldObjects = new Color(0.0f, 1.0f, 1.0f, 1.0f);
 
-        [Header("Layers")]
+        [Header("Layers 각 유형의 오브젝트에 대해 사용되는 레이어를 지정")]
         [Tooltip("Layer for Scene Understanding Background objects")]
         public int LayerForBackgroundObjects;
         [Tooltip("Layer for the Scene Understanding Wall objects")]
@@ -108,7 +112,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Tooltip("Layer for the World mesh")]
         public int LayerForWorldObjects;
 
-        [Header("Scene Object Mesh Materials")]
+        [Header("Scene Object Mesh Materials 시각화에 사용되는 메시 오브젝트의 재질(Material)을 설정")]
         [Tooltip("Material for Scene Understanding Background in Mesh Mode")]
         public Material SceneObjectBackgroundMeshMaterial = null;
         [Tooltip("Material for Scene Understanding Wall in Mesh Mode")]
@@ -124,7 +128,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Tooltip("Material for Scene Understanding Inferred in Mesh Mode")]
         public Material SceneObjectInferredMeshMaterial = null;
 
-        [Header("Scene Object Quad Materials")]
+        [Header("Scene Object Quad Materials 시각화에 사용되는 쿼드 오브젝트의 재질을 설정")]
         [Tooltip("Material for Scene Understanding Background in Quad Mode")]
         public Material SceneObjectBackgroundQuadMaterial = null;
         [Tooltip("Material for Scene Understanding Wall in Mesh Mode")]
@@ -140,13 +144,13 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Tooltip("Material for Scene Understanding Inferred in Mesh Mode")]
         public Material SceneObjectInferredQuadMaterial = null;
 
-        [Header("Scene Object WireFrame and Occlussion Materials")]
+        [Header("Scene Object WireFrame and Occlussion Materials 오브젝트의 와이어프레임 및 가려진(occlusion) 상태에 대한 재질 설정")]
         [Tooltip("Material for scene object mesh wireframes.")]
         public Material SceneObjectWireframeMaterial = null;
         [Tooltip("Material for scene objects when in Ghost mode (invisible object with occlusion)")]
         public Material TransparentOcclussion = null;
 
-        [Header("Filters")]
+        [Header("Filters 오브젝트 표시 유무")]
         [Tooltip("Toggles display of all scene objects, except for the world mesh.")]
         public bool FilterAllSceneObjects = false;
         [Tooltip("Toggles display of large, horizontal scene objects, aka 'Platform'.")]
@@ -166,7 +170,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Tooltip("Toggles the display of wall scene objects.")]
         public bool FilterCeilingSceneObjects = false;
 
-        [Header("Physics")]
+        [Header("Physics 오브젝트에 대한 충돌체(collider) 설정을 제어")]
         [Tooltip("Toggles the creation of platform objects with collider components")]
         public bool AddCollidersInPlatformSceneObjects = false;
         [Tooltip("Toggles the creation of background objects with collider components")]
@@ -188,11 +192,11 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Tooltip("Toggle Ghost Mode, (invisible objects that still occlude)")]
         public bool IsInGhostMode = false;
 
-        [Header("Alignment")]
+        [Header("Alignment  Unity의 Y축에 대해 정상적으로 정렬할지 여부를 설정")]
         [Tooltip("Align SU Objects Normal to Unity's Y axis")]
         public bool AlignSUObjectsNormalToUnityYAxis = true;
 
-        [Header("Events")]
+        [Header("Events Scene Understanding 이벤트가 발생할 때 호출될 유저 정의 함수를 설정")]
         [Tooltip("User function that get called when a Scene Understanding event happens")]
         public UnityEvent OnLoadStarted;
         [Tooltip("User function that get called when a Scene Understanding event happens")]
@@ -201,38 +205,42 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         #endregion
 
         #region Private Variables
-        private Dictionary<SceneObjectKind, Dictionary<RenderMode, Material>> materialCache;
+        private Dictionary<SceneObjectKind, Dictionary<RenderMode, Material>> materialCache; //Scene Understanding 오브젝트 종류 및 렌더링 모드별로 재질(Material)을 캐싱하는 딕셔너리
 
-        private readonly float MinBoundingSphereRadiusInMeters = 5f;
+        private readonly float MinBoundingSphereRadiusInMeters = 5f; //쿼리할 때 사용되는 구(구체)의 반경의 최소 및 최대 값을 나타내는 상수
         private readonly float MaxBoundingSphereRadiusInMeters = 100f;
-        private byte[] LatestSUSceneData = null;
-        private readonly object SUDataLock = new object();
-        private Guid LatestSceneGuid;
+        private byte[] LatestSUSceneData = null; //가장 최근에 수신한 Scene Understanding 데이터를 저장하는 바이트 배열
+        private readonly object SUDataLock = new object(); //Scene Understanding 데이터에 대한 락 처리를 위한 락 오브젝트
+        private Guid LatestSceneGuid; //Scene Understanding 환경의 GUID를 저장하는 변수로, 최근의 환경 및 마지막으로 표시한 환경의 GUID를 저장
         private Guid LastDisplayedSceneGuid;
-        private Task displayTask = null;
+        private Task displayTask = null; //백그라운드에서 환경 데이터를 시각화하는 작업을 관리하기 위한 Task 변수
         [HideInInspector]
-        public float TimeElapsedSinceLastAutoRefresh = 0.0f;
-        private bool DisplayFromDiskStarted = false;
-        private bool RunOnDevice;
-        private readonly int NumberOfSceneObjectsToLoadPerFrame = 5;
-        private SceneUnderstanding.Scene cachedDeserializedScene = null;
+        public float TimeElapsedSinceLastAutoRefresh = 0.0f; //마지막으로 자동 업데이트 이후의 경과 시간을 추적하는 변수
+        private bool DisplayFromDiskStarted = false; //디스크로부터 환경 데이터를 시각화하는 작업이 시작되었는지 여부를 나타내는 불리언 변수
+        private bool RunOnDevice; //디바이스에서 실행 중인지 여부를 나타내는 불리언 변수
+        private readonly int NumberOfSceneObjectsToLoadPerFrame = 5; //각 프레임에서 로드할 Scene Understanding 오브젝트의 수를 나타내는 상수
+        private SceneUnderstanding.Scene cachedDeserializedScene = null; //시리얼라이즈된 Scene Understanding 데이터를 캐싱하고 관리하는 데 사용되는 변수와 락 오브젝트
         private readonly object cachedDeserializedSceneLock = new object();
         #endregion
 
         #region Unity Start and Update
+        //Scene Understanding 데이터를 초기화하고 주기적으로 업데이트하며, 디바이스 또는 에디터에서 실행 중인지에 따라 적절한 동작을 수행하는 데 사용
 
         private async void Start()
         {
+            //null이면 "Scene Root"라는 이름의 빈 게임 오브젝트를 생성하고, 그렇지 않으면 기존 SceneRoot 변수를 그대로 사용
             SceneRoot = SceneRoot == null ? new GameObject("Scene Root") : SceneRoot;
 
             // Considering that device is currently not supported in the editor means that
             // if the application is running in the editor it is for sure running on PC and
             // not a device. this assumption, for now, is always true.
+            //변수를 초기화하여 현재 애플리케이션이 에디터에서 실행 중인지 또는 디바이스에서 실행 중인지를 판별
             RunOnDevice = !Application.isEditor;
 
             if (QuerySceneFromDevice)
             {
                 // Figure out if the application is setup to allow querying a scene from device
+                //디바이스에서 Scene Understanding 데이터 쿼리 시도
 
                 // The app must not be running in the editor
                 if (Application.isEditor)
@@ -242,13 +250,16 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
                     return;
                 }
 
+                //함수를 사용하여 Scene Understanding이 지원되는지 확인
                 if (!SceneUnderstanding.SceneObserver.IsSupported())
                 {
                     Debug.LogError("SceneUnderstandingManager.Start: Scene Understanding not supported.");
                     return;
                 }
 
+                // Scene Understanding에 액세스할 수 있는 권한을 요청
                 SceneObserverAccessStatus access = await SceneUnderstanding.SceneObserver.RequestAccessAsync();
+                //액세스 권한이 거부되면 오류 메시지를 출력하고 초기화를 중단
                 if (access != SceneObserverAccessStatus.Allowed)
                 {
                     Debug.LogError("SceneUnderstandingManager.Start: Access to Scene Understanding has been denied.\n" +
@@ -258,6 +269,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
                 // If the application is capable of querying a scene from the device,
                 // start and endless task that queries for the lastest scene at all times
+                //디바이스에서 Scene Understanding 데이터를 주기적으로 가져오는 백그라운드 작업인 RetrieveDataContinuously()를 시작
                 try
                 {
 #pragma warning disable CS4014
@@ -274,18 +286,17 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         private async void Update()
         {
             // If the scene is being queried from the device, then allow for autorefresh
+           //경과한 시간을 측정하고 지정된 시간(AutoRefreshIntervalInSeconds)마다 데이터를 자동으로 갱신
             if (QuerySceneFromDevice)
             {
                 if (AutoRefresh)
                 {
-                    //경과한 시간을 측정하고 지정된 시간(AutoRefreshIntervalInSeconds)마다 데이터를 자동으로 표시
                     TimeElapsedSinceLastAutoRefresh += Time.deltaTime;
                     if (TimeElapsedSinceLastAutoRefresh >= AutoRefreshIntervalInSeconds)
                     {
-                        //씬 데이터를 주기적으로 갱신
                         try
                         {
-                            await DisplayDataAsync();
+                            await DisplayDataAsync(); //씬 데이터를 주기적으로 갱신
                         }
                         catch (Exception ex)
                         {
@@ -297,9 +308,9 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
             }
             // If the scene is pre-loaded from disk, display it only once, as consecutive renders
             // will only bring the same result
+            //씬 데이터를 디스플레이, 디바이스에서 씬을 쿼리하는 대신 미리 저장된 씬을 사용
             else if (!DisplayFromDiskStarted)
             {
-                //씬 데이터를 디스플레이, 디바이스에서 씬을 쿼리하는 대신 미리 저장된 씬을 사용
                 DisplayFromDiskStarted = true;
                 try
                 {
@@ -314,7 +325,8 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         #endregion
 
-        #region Data Querying and Consumption (Scene Understanding 데이터를 쿼리하고 처리하는 부분)
+        #region Data Querying and Consumption 
+        // Scene Understanding 데이터를 지속적으로 가져와서 Unity에서 시각화하고, 사용자가 요청한 데이터 유형을 가져오는 것
 
         // It is recommended to deserialize a scene from scene fragments
         // consider all scenes as made up of scene fragments, even if only one.
@@ -395,6 +407,8 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         /// <param name="enableInference">When enabled, both observed and inferred scene objects are retrieved. Otherwise, only observed scene objects are retrieved.</param>
         /// <param name="enableWorldMesh">When enabled, retrieves the world mesh.</param>
         /// <param name="lod">If world mesh is enabled, lod controls the resolution of the mesh returned.</param>
+        /// Scene Understanding API로부터 가장 최신의 씬 데이터를 가져오는 역할
+        /// 여러 인자를 받아서 쿼리 설정을 조정, 원하는 유형의 데이터(쿼드, 메쉬, 월드 메쉬)를 요청, 원하는 LOD(레벨 오브 디테일) 수준을 설정
         private void RetrieveData(float boundingSphereRadiusInMeters, bool enableQuads, bool enableMeshes, bool enableInference, bool enableWorldMesh, SceneUnderstanding.SceneMeshLevelOfDetail lod)
         {
             Debug.Log("SceneUnderstandingManager.RetrieveData: Started.");
@@ -445,10 +459,12 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         #endregion
 
-        #region Display Data into Unity (Scene Understanding 데이터를 Unity 게임 객체로 표시하는 데 사용, Scene Understanding 데이터를 Unity 게임 객체로 표시하고, 씬을 시각화)
+        #region Display Data into Unity 
+        //Scene Understanding 데이터를 Unity 게임 객체로 표시하는 데 사용, Scene Understanding 데이터를 Unity 게임 객체로 표시하고, 씬을 시각화
 
         /// <summary>
         /// Displays the most recently updated SU data as Unity game objects.
+        /// Scene Understanding 데이터를 Unity 게임 객체로 표시
         /// </summary>
         /// <returns>
         /// A <see cref="Task"/> that represents the operation.
@@ -456,6 +472,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         public Task DisplayDataAsync()
         {
             // See if we already have a running task
+            //이미 실행 중인 작업이 있으면 해당 작업을 반환하고, 그렇지 않으면 새로운 작업을 시작하여 데이터를 표시
             if ((displayTask != null) && (!displayTask.IsCompleted))
             {
                 // Yes we do. Return the already running task.
@@ -485,6 +502,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         /// <summary>
         /// This coroutine will deserialize the latest SU data, either queried from the device
         /// or from disk and use it to create Unity Objects that represent that geometry
+        /// 본격적으로 Scene Understanding 데이터를 직렬화하고 Unity 게임 객체로 변환하는 주요 작업을 수행
         /// </summary>
         /// <param name="completionSource">
         /// The <see cref="TaskCompletionSource{TResult}"/> that can be used to signal the coroutine is complete.
@@ -603,6 +621,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Create a Unity Game Object for an individual Scene Understanding Object
+        /// Scene Understanding 객체의 다양한 유형(예: 벽, 바닥, 천장, 배경)을 Unity 게임 객체로 생성
         /// </summary>
         /// <param name="suObject">The Scene Understanding Object to generate in Unity</param>
         private bool DisplaySceneObject(SceneUnderstanding.SceneObject suObject)
@@ -615,6 +634,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
             // If requested, scene objects can be excluded from the generation, the World Mesh is considered
             // a separate object hence is not affected by this filter
+            //객체의 필터 설정 및 요청 모드에 따라 다른 시각화를 생성
             if (FilterAllSceneObjects == true && suObject.Kind != SceneUnderstanding.SceneObjectKind.World)
             {
                 return false;
@@ -939,6 +959,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Create a unity Mesh from a set of Scene Understanding Meshes
+        /// Scene Understanding Mesh 객체를 Unity Mesh로 변환하는 함수. Scene Understanding Mesh의 삼각형 인덱스 및 정점 위치 데이터를 가져와 Unity Mesh로 변환
         /// </summary>
         /// <param name="suMeshes">The Scene Understanding mesh to generate in Unity</param>
         private Mesh GenerateUnityMeshFromSceneObjectMeshes(IEnumerable<SceneUnderstanding.SceneMesh> suMeshes)
@@ -1013,6 +1034,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Create a Unity Mesh from a Scene Understanding Quad
+        /// Scene Understanding Quad 객체를 Unity Mesh로 변환하는 함수. Scene Understanding Quad의 크기를 고려하여 Quad의 정점과 인덱스 데이터를 생성하고 Unity Mesh로 반환
         /// </summary>
         /// <param name="suQuad">The Scene Understanding quad to generate in Unity</param>
         private Mesh GenerateUnityMeshFromSceneObjectQuad(SceneUnderstanding.SceneQuad suQuad)
@@ -1072,6 +1094,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Get the corresponding color for each SceneObject Kind
+        /// Scene Understanding 객체의 종류에 따라 색상 반환.  벽, 바닥, 천장과 같은 객체의 종류에 따라 다른 색상 및 레이어를 설정
         /// </summary>
         /// <param name="kind">The Scene Understanding kind from which to query the color</param>
         private Color? GetColor(SceneObjectKind kind)
@@ -1101,6 +1124,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Get the corresponding layer for each SceneObject Kind
+        /// Scene Understanding 객체의 종류에 따라 레이어를 반환
         /// </summary>
         /// <param name="kind">The Scene Understanding kind from which to query the layer</param>
         private int GetLayer(SceneObjectKind kind)
@@ -1130,6 +1154,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Get the cached material for each SceneObject Kind
+        /// Scene Understanding 객체의 종류 및 렌더링 모드에 따라 머티리얼(Material)을 반환하는 함수
         /// </summary>
         /// <param name="kind">
         /// The <see cref="SceneObjectKind"/> to obtain the material for.
@@ -1199,6 +1224,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         /// Returns the correct Material for Rendering an SU Object as 
         /// a GameObject corresponding to its SU type and the Rendering Mode
         /// of the app
+        /// Scene Understanding 객체의 종류 및 렌더링 모드에 따라 머티리얼(Material)을 반환하는 함수
         /// </summary>
         /// <param name="mode">The Render Mode of the app, Mesh mode or Quad mode </param>
         /// <param name="kind">The Type of SU Object (Wall, Floor etc)</param>
@@ -1258,6 +1284,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Function to add a Mesh to a Unity Object
+        /// Unity GameObject에 Mesh와 Material을 추가하는 함수. Unity GameObject에 Mesh 및 Material을 연결하여 시각적으로 렌더링
         /// </summary>
         /// <param name="unityObject">The unity object to where the mesh will be applied </param>
         /// <param name="mesh"> Mesh to be applied                                       </param>
@@ -1279,6 +1306,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Apply Region mask to a Scene Object
+        /// Scene Understanding Quad 객체에 지역 마스크를 적용하는 함수. Quad 객체의 지역을 마스킹하고, 해당 마스크를 Unity Material의 텍스처로 적용
         /// </summary>
         private void ApplyQuadRegionMask(SceneUnderstanding.SceneQuad quad, GameObject gameobject, Color color)
         {
@@ -1562,14 +1590,16 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         #endregion
 
         #region Save To Disk Functions
+        //Scene Understanding 정보를 저장하고 Unity의 3D 객체로 변환한 데이터를 디스크에 저장
 
         /// <summary>
         /// Get the latest bytes from a Scene Queried from device
+        ///  Scene Understanding에서 가져온 최신 데이터를 바이트 배열로 반환하는 함수
         /// </summary>
         private byte[] GetLatestSceneBytes()
         {
             byte[] sceneBytes = null;
-            lock (SUDataLock)
+            lock (SUDataLock) //데이터를 가져오기 전에 SUDataLock을 사용하여 다른 스레드와의 동기화를 보장
             {
                 if (LatestSUSceneData != null)
                 {
@@ -1585,12 +1615,14 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Save a serialized scene bytes to disk
+        /// Scene Understanding 데이터를 디스크에 저장하는 함수
         /// </summary>
         // Await is conditionally compiled out based on platform but needs to be awaitable
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task SaveBytesToDiskAsync()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
+            //데이터는 현재 날짜 및 시간을 기반으로 한 고유한 파일 이름으로 저장
             DateTime currentDate = DateTime.Now;
             int year = currentDate.Year;
             int month = currentDate.Month;
@@ -1606,6 +1638,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
                 byte[] OnDeviceBytes = GetLatestSceneBytes();
 
+                //Windows UWP 환경에서 작동하며 데이터를 로컬 폴더에 저장
 #if WINDOWS_UWP
                 var folder = WindowsStorage.ApplicationData.Current.LocalFolder;
                 var file = await folder.CreateFileAsync(fileName, WindowsStorage.CreationCollisionOption.GenerateUniqueName);
@@ -1633,8 +1666,9 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         }
 
         /// <summary>
-        /// Save the generated Unity Objects from Scene Understanding as Obj files
-        /// to disk
+        /// Save the generated Unity Objects from Scene Understanding as Obj files to disk
+        /// Scene Understanding으로부터 생성된 Unity 객체를 .obj 파일 형식으로 디스크에 저장하는 함수. 서로 다른 SceneObjectKind(예: 벽, 바닥, 천장)에 속하는 객체를 분류하여 각각의 .obj 파일로 저장
+        /// .obj 파일은 SceneObject의 정점 및 면 정보를 포함하고, 정점은 해당 객체의 종류에 따라 색상이 지정됨
         /// </summary>
         public async Task SaveObjsToDiskAsync()
         {
@@ -1720,6 +1754,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
 
         /// <summary>
         /// Save the generated Unity Objects from Scene Understanding as Obj files
+        /// 하나의 SceneObjectKind에 해당하는 여러 객체를 하나의 .obj 파일로 결합
         /// to disk (all objects of one kind as one obj file)
         /// </summary>
         private async Task SaveAllSceneObjectsOfAKindAsOneObj(List<SceneUnderstanding.SceneObject> sceneObjects, Color? color, string fileName)
@@ -1791,8 +1826,8 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         }
 
         /// <summary>
-        /// Save a string to disk
-        /// this string is the obj file that represents the SU Geometry
+        /// Save a string to disk this string is the obj file that represents the SU Geometry
+        /// 문자열 데이터를 디스크에 저장하는 함수로, .obj 파일 형식의 문자열 데이터를 저장
         /// </summary>
 // Await is conditionally compiled out based on platform but needs to be awaitable
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -1824,6 +1859,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
             }
         }
 
+        //정점 배열을 변환 행렬을 사용하여 변환하는 함수
         private void TransformVertices(System.Numerics.Matrix4x4 transformationMatrix, System.Numerics.Vector3[] vertices)
         {
             for (int i = 0; i < vertices.Length; ++i)
