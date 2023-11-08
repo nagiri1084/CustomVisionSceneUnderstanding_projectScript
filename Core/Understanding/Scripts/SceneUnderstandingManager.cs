@@ -226,6 +226,16 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         #region Unity Start and Update
         //Scene Understanding 데이터를 초기화하고 주기적으로 업데이트하며, 디바이스 또는 에디터에서 실행 중인지에 따라 적절한 동작을 수행하는 데 사용
 
+        public void TurnOnAutoRefresh()
+        {
+            AutoRefresh = true;
+        }
+        public void TurnOffAutoRefresh()
+        {
+            AutoRefresh = false;
+            Debug.Log("AutoRefresh false");
+        }
+
         private async void Start()
         {
             //null이면 "Scene Root"라는 이름의 빈 게임 오브젝트를 생성하고, 그렇지 않으면 기존 SceneRoot 변수를 그대로 사용
