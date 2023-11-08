@@ -11,6 +11,7 @@ public class CreateTagList : MonoBehaviour
     private int i = 0;
     [SerializeField] public int tagIndex = 0;
     private GameObject rayObject;
+    private GameObject storeHit;
     public TextMeshPro Label;
     [SerializeField] private RaycastHit hit;
     [SerializeField] public RectTransform tagItem;
@@ -35,6 +36,7 @@ public class CreateTagList : MonoBehaviour
                 if (hit.transform.gameObject.tag == "Label")
                 {
                     Label.text = hit.transform.gameObject.GetComponent<TextMeshPro>().text;
+                    storeHit = hit.transform.gameObject;
                     Debug.Log(Label.text);
                 }
             }
@@ -55,7 +57,7 @@ public class CreateTagList : MonoBehaviour
                 GameObject tagItemButtonTexts = addTagItem.transform.GetChild(1).GetChild(0).gameObject;
 
                 tagItemName.GetComponent<Text>().text = TagList[i].tagName + ": " + TagList[i].probability;
-                tagItemButtonTexts.GetComponent<Text>().text = i.ToString();
+                tagItemButtonTexts.GetComponent<Text>().text = (i+1).ToString();
                 //Debug.Log(yValue);
                 yValue -= 20;
                 //yValue -= addTagItem.sizeDelta.y; ;
@@ -66,14 +68,14 @@ public class CreateTagList : MonoBehaviour
     public void SendChooseTag()
     {
         CheckText.Instance.SetStatus("SendChooseTag");
-        Debug.Log(tagIndex);
+        //Debug.Log(tagIndex-1);
         if (selectPredictions != null && tagIndex != 0)
         {
-            hit.transform.gameObject.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex].tagName;
-            CheckText.Instance.SetStatus(hit.transform.gameObject.GetComponent<TextMeshPro>().text);
-            Debug.Log(hit.transform.gameObject.GetComponent<TextMeshPro>().text);
-            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex]);
-            CheckText.Instance.SetStatus(selectPredictions[tagIndex].tagName+", "+selectPredictions[tagIndex].probability.ToString());
+            storeHit.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex-1].tagName;
+            CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text);
+            Debug.Log(storeHit.GetComponent<TextMeshPro>().text);
+            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex-1]);
+            CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString());
         }
     }
 }
