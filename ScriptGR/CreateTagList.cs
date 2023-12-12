@@ -28,7 +28,7 @@ public class CreateTagList : MonoBehaviour
     }
     private void Update()
     {
-        rayObject = GameObject.Find("CursorPress");
+        rayObject = GameObject.Find("Right_ShellHandRayPointer(Clone)");
         if (rayObject)
         {
             if (Physics.Raycast(rayObject.transform.position, rayObject.transform.forward, out hit))
@@ -40,12 +40,13 @@ public class CreateTagList : MonoBehaviour
                     Debug.Log(Label.text);
                 }
             }
+            Debug.DrawRay(rayObject.transform.position, rayObject.transform.forward, Color.red);
         }
     }
 
     public void AddTagList(List<Prediction> TagList)
     {
-        //CheckText.Instance.SetStatus("AddTagList");
+        CheckText.Instance.SetStatus("AddTagList");
         if (TagList != null)
         {
             selectPredictions = TagList;
@@ -73,8 +74,8 @@ public class CreateTagList : MonoBehaviour
         {
             storeHit.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex-1].tagName;
             CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text);
-            Debug.Log(storeHit.GetComponent<TextMeshPro>().text);
-            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex-1]);
+            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]);
+            CreateSelectObject.Instance.InstantiateObject(selectPredictions[tagIndex - 1]);
             CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString());
         }
     }
