@@ -11,7 +11,6 @@ public class TextFileExport : MonoBehaviour
 
     public void RecordLabelData()
     {
-        CheckText.Instance.SetStatus("start RecordLabelData");
 
         //Microsoft HoloLens의 Windows 장치 포털에 있는 지도 관리자 페이지로 경로 설정
         var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt";
