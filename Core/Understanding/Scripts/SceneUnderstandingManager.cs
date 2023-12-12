@@ -47,7 +47,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
         [Header("Data Loader Mode")]
         [Tooltip("When enabled, the scene will be queried from a device (e.g Hololens). Otherwise, a previously saved, serialized scene will be loaded and served from your PC." +
             "환경을 디바이스에서 쿼리할지 여부 표시. true로 설정하면 디바이스에서 환경을 쿼리하고, false로 설정하면 미리 저장된 시리얼라이즈된 환경을 로드")] 
-        public bool QuerySceneFromDevice = false;
+        public bool QuerySceneFromDevice;
         [Tooltip("The scene to load when not running on the device (e.g SU_Kitchen in Resources/SerializedScenesForPCPath)." +
             "환경 데이터를 미리 저장한 경우, 그 경로를 지정할 수 있는 변수")]
         public List<TextAsset> SUSerializedScenePaths = new List<TextAsset>(0);

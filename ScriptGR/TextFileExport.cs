@@ -1,77 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using System.IO;
+    using TMPro;
 
 public class TextFileExport : MonoBehaviour
 {
     private StreamWriter fileWriter;
+    private GameObject[] LabelList;
 
-    [Header("Recoding")]
-    public float recordingDuration = 2.0f;
-    public float recordingInterval = 0.1f;
-    public string recStartKey;
-
-    [Header("RigidBody Parts")]
-    public Transform rigidbody_Hand;
-    public Transform rigidbody_Elbow;
-    public Transform rigidbody_Shoulder;
-    public Transform[] rigidbodyParts_L;
-
-    [Header("Avatar Parts")]
-    public Transform avatar_Hand;
-    public Transform avatar_Elbow;
-    public Transform avatar_Shoulder;
-    public Transform[] avatarParts_L;
-
-    [Header("Parts Error")]
-    public Transform[] PartsError_L;
-
-    // Start is called before the first frame update
-    void Start()
+    public void RecordLabelData()
     {
-        //경로 수정
-        string filePath = Path.Combine(Application.dataPath, "_output.txt");
+        CheckText.Instance.SetStatus("start RecordLabelData");
+
+        //Microsoft HoloLens의 Windows 장치 포털에 있는 지도 관리자 페이지로 경로 설정
+        var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt";
         fileWriter = new StreamWriter(filePath);
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(recStartKey))
+        LabelList = GameObject.FindGameObjectsWithTag("Label");
+        for (int i = 0; i < LabelList.Length; i++)
         {
-            StartRecording();
+            //Background, platform, wall 정보 라벨만 들어옴
+            Debug.Log(LabelList[i]);
+            Transform LabelTransform = LabelList[i].transform;
+
+            // Label 이름과 위치 데이터 Text파일에 작성
+            string LabelName = LabelTransform.gameObject.GetComponent<TextMeshPro>().text;
+            string LabelPosData = LabelTransform.position.x + "," + LabelTransform.position.y + "," + LabelTransform.position.z;
+            fileWriter.WriteLine(LabelName);
+            fileWriter.WriteLine(LabelPosData);
+            Debug.Log(LabelName + ", " + LabelPosData);
         }
+        OnDestroy();
     }
-
-    public void StartRecording()
-    {
-        Debug.Log("Recoding Start");
-        fileWriter.WriteLine("Recoding Start at " + Time.time);
-
-        InvokeRepeating("RecordTransformData", 0f, recordingInterval);
-        Invoke("StopRecording", recordingDuration);
-
-        Debug.Log("Recoding Finished");
-    }
-
-    void RecordTransformData()
-    {
-        float testValue = rigidbody_Hand.transform.position.x - avatar_Hand.transform.position.x;
-        float testAngle = rigidbody_Hand.transform.rotation.x - avatar_Hand.transform.rotation.x;
-
-        // 이 부분 응용
-        string transformData = Time.time + "\t" + testValue + "\t" + testAngle;
-        fileWriter.WriteLine(transformData);
-    }
-    void StopRecording()
-    {
-        fileWriter.Close();
-        CancelInvoke("RecordTransformData");
-    }
-
     void OnDestroy()
     {
+        //다 작성한 파일 닫기
         fileWriter.Close();
     }
 }
