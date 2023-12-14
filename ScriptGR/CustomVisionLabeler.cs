@@ -57,7 +57,7 @@ namespace Microsoft.MixedReality.SceneUnderstanding.Samples.Unity
                 GameObject textGO = new GameObject("Label");
 
                 //태그 설정
-                textGO.tag = "Label";
+                //textGO.tag = "Label";
 
                 //collider 컴포넌트 추가 및 크기 설정
                 textGO.AddComponent<BoxCollider>();

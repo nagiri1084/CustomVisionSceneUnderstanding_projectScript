@@ -1,4 +1,4 @@
-    using System.Collections;
+ï»¿    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using System.IO;
@@ -11,30 +11,33 @@ public class TextFileExport : MonoBehaviour
 
     public void RecordLabelData()
     {
-
-        //Microsoft HoloLensÀÇ Windows ÀåÄ¡ Æ÷ÅĞ¿¡ ÀÖ´Â Áöµµ °ü¸®ÀÚ ÆäÀÌÁö·Î °æ·Î ¼³Á¤
-        var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt";
+        //Microsoft HoloLensì˜ Windows ì¥ì¹˜ í¬í„¸ì— ìˆëŠ” ì§€ë„ ê´€ë¦¬ì í˜ì´ì§€ë¡œ ê²½ë¡œ ì„¤ì •
+        //var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt";
+        string filePath = Path.Combine(Application.dataPath, "_output.txt");
         fileWriter = new StreamWriter(filePath);
 
         LabelList = GameObject.FindGameObjectsWithTag("Label");
         for (int i = 0; i < LabelList.Length; i++)
         {
-            //Background, platform, wall Á¤º¸ ¶óº§¸¸ µé¾î¿È
-            Debug.Log(LabelList[i]);
+            //LabelList[i].rectTransform.position = new Vector3 (LabelList2[i].transform.position.x, LabelList2[i].transform.position.y, LabelList2[i].transform.position.z);
+            //Background, platform, wall ì •ë³´ ë¼ë²¨ë§Œ ë“¤ì–´ì˜´
             Transform LabelTransform = LabelList[i].transform;
 
-            // Label ÀÌ¸§°ú À§Ä¡ µ¥ÀÌÅÍ TextÆÄÀÏ¿¡ ÀÛ¼º
-            string LabelName = LabelTransform.gameObject.GetComponent<TextMeshPro>().text;
+            // Label ì´ë¦„ê³¼ ìœ„ì¹˜ ë°ì´í„° TextíŒŒì¼ì— ì‘ì„±
+            string LabelName = i + ": " + LabelTransform.name;
             string LabelPosData = LabelTransform.position.x + "," + LabelTransform.position.y + "," + LabelTransform.position.z;
+            //string LabelRotData = LabelTransform.rotation.x + "," + LabelTransform.rotation.y + "," + LabelTransform.rotation.z;
             fileWriter.WriteLine(LabelName);
             fileWriter.WriteLine(LabelPosData);
+            //fileWriter.WriteLine(LabelRotData);
             Debug.Log(LabelName + ", " + LabelPosData);
         }
+
         OnDestroy();
     }
     void OnDestroy()
     {
-        //´Ù ÀÛ¼ºÇÑ ÆÄÀÏ ´İ±â
+        //ë‹¤ ì‘ì„±í•œ íŒŒì¼ ë‹«ê¸°
         fileWriter.Close();
     }
 }
