@@ -74,7 +74,7 @@ public class CreateTagList : MonoBehaviour
         {
             storeHit.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex-1].tagName;
             CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text);
-            //SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]);
+            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]);
             CreateSelectObject.Instance.InstantiateObject(selectPredictions[tagIndex - 1]);
             CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString());
         }

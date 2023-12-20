@@ -11,7 +11,7 @@ public class CreateLabels : MonoBehaviour
     char separatorChar = ',';
     public GameObject Label;
     private bool loadFileState = true;
-    void Start()
+    void Awake()
     {
         //Microsoft HoloLens의 Windows 장치 포털에 있는 지도 관리자 페이지로 경로 설정
         string filePath = Path.Combine(Application.dataPath, "_output.txt");
@@ -20,6 +20,11 @@ public class CreateLabels : MonoBehaviour
         {
             if (loadFileState == true)
             {
+                this.name = fileReader.ReadLine();
+                List<string> suObjectPos = new List<string>();
+                suObjectPos.AddRange(fileReader.ReadLine().Split(separatorChar));
+                this.transform.position = new Vector3(float.Parse(suObjectPos[0]), float.Parse(suObjectPos[1]), float.Parse(suObjectPos[2]));
+
                 while (fileReader.Peek() >= 0)
                 {
                     //TextFileData 읽기

@@ -110,6 +110,7 @@ public class ImageCapture : MonoBehaviour
         // Begin capture process, set the image format
         PhotoCapture.CreateAsync(false, delegate (PhotoCapture captureObject)
         {
+            CheckText.Instance.SetStatus("PhotoCapture");
             photoCaptureObject = captureObject;
 
             CameraParameters camParameters = new CameraParameters

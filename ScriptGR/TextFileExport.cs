@@ -8,15 +8,25 @@ public class TextFileExport : MonoBehaviour
 {
     private StreamWriter fileWriter;
     private GameObject[] LabelList;
+    public Transform Player;
+    private GameObject PlayerRightHand;
 
     public void RecordLabelData()
     {
         //Microsoft HoloLens의 Windows 장치 포털에 있는 지도 관리자 페이지로 경로 설정
-        //var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt";
-        string filePath = Path.Combine(Application.dataPath, "_output.txt");
+        var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt";
+        //string filePath = Path.Combine(Application.dataPath, "_output.txt");
         fileWriter = new StreamWriter(filePath);
 
-        LabelList = GameObject.FindGameObjectsWithTag("Label");
+        LabelList = GameObject.FindGameObjectsWithTag("Object");
+        fileWriter.WriteLine("PlayerPosition");
+        fileWriter.WriteLine(Player.position.x + "," + Player.position.y + "," + Player.position.z);
+        PlayerRightHand = GameObject.Find("R_Wrist");
+        if (PlayerRightHand)
+        {
+            fileWriter.WriteLine("PlayerRightHandPosition");
+            fileWriter.WriteLine(PlayerRightHand.transform.position.x + "," + PlayerRightHand.transform.position.y + "," + PlayerRightHand.transform.position.z);
+        }
         for (int i = 0; i < LabelList.Length; i++)
         {
             //LabelList[i].rectTransform.position = new Vector3 (LabelList2[i].transform.position.x, LabelList2[i].transform.position.y, LabelList2[i].transform.position.z);
