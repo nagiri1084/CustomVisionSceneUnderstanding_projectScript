@@ -12,7 +12,10 @@ public class CreateTagList : MonoBehaviour
     [SerializeField] public int tagIndex = 0;
     private GameObject rayObject;
     private GameObject storeHit;
-    public TextMeshPro Label;
+    public TextMeshPro LabelUiTitle;
+    public GameObject LabelPrefeb;
+    //private Transform LabelCreatePos; //Real
+    public Transform LabelCreatePos; //Test
     [SerializeField] private RaycastHit hit;
     [SerializeField] public RectTransform tagItem;
     [SerializeField] private ScrollRect scroll;
@@ -23,8 +26,12 @@ public class CreateTagList : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        // Allows this instance to behave like a singleton
+        // Allows this instance to behave like a singleton //Real
         Instance = this;
+    }
+    private void Start()
+    {
+        //LabelCreatePos = SceneOrganiser.Instance.cursor.transform;
     }
     private void Update()
     {
@@ -35,9 +42,9 @@ public class CreateTagList : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Label")
                 {
-                    Label.text = hit.transform.gameObject.GetComponent<TextMeshPro>().text;
+                    LabelUiTitle.text = hit.transform.gameObject.GetComponent<TextMeshPro>().text;
                     storeHit = hit.transform.gameObject;
-                    Debug.Log(Label.text);
+                    Debug.Log(LabelUiTitle.text);
                 }
             }
             Debug.DrawRay(rayObject.transform.position, rayObject.transform.forward, Color.red);
@@ -46,7 +53,7 @@ public class CreateTagList : MonoBehaviour
 
     public void AddTagList(List<Prediction> TagList)
     {
-        CheckText.Instance.SetStatus("AddTagList");
+        CheckText.Instance.SetStatus("AddTagList"); //Real
         if (TagList != null)
         {
             selectPredictions = TagList;
@@ -68,7 +75,7 @@ public class CreateTagList : MonoBehaviour
     
     public void SendChooseTag()
     {
-        CheckText.Instance.SetStatus("SendChooseTag");
+        CheckText.Instance.SetStatus("SendChooseTag"); //Real
         //Debug.Log(tagIndex-1);
         if (selectPredictions != null && tagIndex != 0)
         {
@@ -77,6 +84,16 @@ public class CreateTagList : MonoBehaviour
             SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]);
             CreateSelectObject.Instance.InstantiateObject(selectPredictions[tagIndex - 1]);
             CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString());
+        }
+    }
+
+    public void CreateSelectedObjectLabel()
+    {
+        CheckText.Instance.SetStatus("CreateSelectedObjectLabel"); //Real
+        if (selectPredictions != null && tagIndex != 0)
+        {
+            GameObject newLabel = Instantiate(LabelPrefeb, LabelCreatePos.position, Quaternion.identity);
+            newLabel.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex - 1].tagName;
         }
     }
 }

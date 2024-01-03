@@ -13,4 +13,11 @@ public class SelectBestTag : MonoBehaviour
         //return tagIndex;
     }
 
+    public void CreateLabelButton()
+    {
+        tagIndex = int.Parse(this.GetComponent<Text>().text);
+        CreateTagList.Instance.tagIndex = tagIndex;
+        CreateTagList.Instance.CreateSelectedObjectLabel();
+    }
+
 }
