@@ -14,8 +14,8 @@ public class ExportLabelsTextFile : MonoBehaviour
     public void RecordLabelData()
     {
         //Microsoft HoloLens의 Windows 장치 포털에 있는 지도 관리자 페이지로 경로 설정
-        //var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt"; //Real
-        string filePath = Path.Combine(Application.dataPath, "_output.txt"); //Test
+        var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt"; //Real
+        //string filePath = Path.Combine(Application.dataPath, "_output.txt"); //Test
         fileWriter = new StreamWriter(filePath);
 
         //Player 이름과 위치 기록

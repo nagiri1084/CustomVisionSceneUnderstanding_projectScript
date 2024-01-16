@@ -12,7 +12,7 @@ public class CustomVisionAnalyser : MonoBehaviour
     /// Split JsonFile
     /// </summary>
     char separatorChar = '"';
-    public string[] tagName = new string[] { "chair", "swivelchair", "laptop", "table" };
+    public string[] tagName = new string[] { "3Dprinter", "chair", "laptop", "shelf", "table" };
 
     /// <summary>
     /// Current threshold accepted for displaying the label
@@ -33,7 +33,7 @@ public class CustomVisionAnalyser : MonoBehaviour
     /// <summary>
     /// Insert your prediction endpoint here
     /// </summary>
-    private string predictionEndpoint = "https://azurecustomvisionproject-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/c2ec8fb0-d34a-4abb-975f-b8e3ca5bee35/detect/iterations/Iteration/image";
+    private string predictionEndpoint = "https://azurecustomvisionproject-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/c2ec8fb0-d34a-4abb-975f-b8e3ca5bee35/detect/iterations/Iteration4/image";
 
     /// <summary>
     /// Bite array of the image to submit for analysis
@@ -100,6 +100,9 @@ public class CustomVisionAnalyser : MonoBehaviour
         return binaryReader.ReadBytes((int)fileStream.Length);
     }
 
+    /// <summary>
+    /// CustomVision 프로젝트 파일에서 Json파일 받아서 역직렬화 하는 함수
+    /// </summary>
     public void SplitJsonFile(string jsonFileData)
     {
         if (jsonFileData != null)
@@ -108,7 +111,6 @@ public class CustomVisionAnalyser : MonoBehaviour
             List<int> tagOrder = new List<int>();
             List<Prediction> predictions = new List<Prediction> { };
 
-            //textLines = jsonFileData.Split(separatorChar, System.StringSplitOptions.RemoveEmptyEntries);
             textLines.AddRange(jsonFileData.Split(separatorChar));
             Debug.Log(textLines);
 
@@ -157,7 +159,6 @@ public class CustomVisionAnalyser : MonoBehaviour
             // Sort the predictions to locate the highest one
             List<Prediction> sortedPredictions = new List<Prediction>();
             sortedPredictions = predictions.OrderByDescending(p => p.probability).ToList();
-            //sortedPredictions = predictions.OrderBy(p => p.probability).ToList();
             CreateTagList.Instance.AddTagList(sortedPredictions);
             CheckText.Instance.SetStatus("FindBestTag");
             //

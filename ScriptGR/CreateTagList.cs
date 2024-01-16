@@ -26,12 +26,12 @@ public class CreateTagList : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        // Allows this instance to behave like a singleton //Real
+        // Allows this instance to behave like a singleton 
         Instance = this;
     }
     private void Start()
     {
-        //LabelCreatePos = SceneOrganiser.Instance.cursor.transform;
+        //LabelCreatePos = SceneOrganiser.Instance.cursor.transform;//Real
     }
     private void Update()
     {
@@ -80,10 +80,10 @@ public class CreateTagList : MonoBehaviour
         if (selectPredictions != null && tagIndex != 0)
         {
             storeHit.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex-1].tagName;
-            CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text);
-            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]);
+            CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text); //Real
+            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]); //Real
             CreateSelectObject.Instance.InstantiateObject(selectPredictions[tagIndex - 1]);
-            CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString());
+            CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString()); //Real
         }
     }
 
