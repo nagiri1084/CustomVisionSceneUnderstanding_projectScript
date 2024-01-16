@@ -7,9 +7,11 @@ using TMPro;
 
 public class LoadLabelsData : MonoBehaviour
 {
+    public bool CreateLabel;
     private StreamReader fileReader;
     char separatorChar = ',';
     public GameObject Label;
+    public GameObject PrefabRoot;
     public GameObject[] tagObjects;
 
     void Start()
@@ -17,13 +19,8 @@ public class LoadLabelsData : MonoBehaviour
         //Microsoft HoloLens의 Windows 장치 포털에 있는 지도 관리자 페이지로 경로 설정
         string filePath = Path.Combine(Application.dataPath, "_output.txt");
         fileReader = new StreamReader(filePath);
-        if (fileReader != null)
+        if (fileReader != null && CreateLabel == true)
         {
-            this.name = fileReader.ReadLine();
-            List<string> suObjectPos = new List<string>();
-            suObjectPos.AddRange(fileReader.ReadLine().Split(separatorChar));
-            this.transform.position = new Vector3(float.Parse(suObjectPos[0]), float.Parse(suObjectPos[1]), float.Parse(suObjectPos[2]));
-
             while (fileReader.Peek() >= 0)
             {
                 //TextFileData 읽기
@@ -48,7 +45,7 @@ public class LoadLabelsData : MonoBehaviour
                     {
                         //3D 오브젝트 생성
                         GameObject temp2 = Instantiate(tagObjects[i], temp1.transform.position, Quaternion.identity);
-                        temp2.transform.parent = temp1.transform;
+                        temp2.transform.parent = PrefabRoot.transform;
                     }
                 }
             }
