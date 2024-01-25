@@ -17,13 +17,15 @@ public class SplitJsonFile : MonoBehaviour
     /// Split JsonFile
     /// </summary>
     char separatorChar = '"';
-    public string[] tagName = new string[] { "chair", "swivelchair", "laptop", "table" };
+    //태그를 받아오는 파일에서 가져올 수는 없을까..?
+    public string[] tagName = new string[] { "chair", "bed", "closet", "dressingTable", "hanger", "shelf", "storageShelf", "table"}; //Interior
+    //public string[] tagName = new string[] { "chair", "shelf", "table", "shelf", "board" }; //StudyRoom
 
     /// <summary>
     /// Current threshold accepted for displaying the label
     /// Reduce this value to display the recognition more often
     /// </summary>
-    internal float probabilityThreshold = 0.02f;
+    internal float probabilityThreshold = 0.02f; //가져올 최소 정확도
 
     void Start()
     {

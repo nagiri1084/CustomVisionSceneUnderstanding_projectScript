@@ -53,7 +53,7 @@ public class CreateTagList : MonoBehaviour
 
     public void AddTagList(List<Prediction> TagList)
     {
-        CheckText.Instance.SetStatus("AddTagList"); //Real
+        //CheckText.Instance.SetStatus("AddTagList"); //Real
         if (TagList != null)
         {
             selectPredictions = TagList;
@@ -75,13 +75,13 @@ public class CreateTagList : MonoBehaviour
     
     public void SendChooseTag()
     {
-        CheckText.Instance.SetStatus("SendChooseTag"); //Real
+        //CheckText.Instance.SetStatus("SendChooseTag"); //Real
         //Debug.Log(tagIndex-1);
         if (selectPredictions != null && tagIndex != 0)
         {
             storeHit.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex-1].tagName;
-            CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text); //Real
-            SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]); //Real
+            //CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text); //Real
+            //SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]); //Real
             CreateSelectObject.Instance.InstantiateObject(selectPredictions[tagIndex - 1]);
             CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString()); //Real
         }
@@ -89,7 +89,7 @@ public class CreateTagList : MonoBehaviour
 
     public void CreateSelectedObjectLabel()
     {
-        CheckText.Instance.SetStatus("CreateSelectedObjectLabel"); //Real
+        //CheckText.Instance.SetStatus("CreateSelectedObjectLabel"); //Real
         if (selectPredictions != null && tagIndex != 0)
         {
             GameObject newLabel = Instantiate(LabelPrefeb, LabelCreatePos.position, Quaternion.identity);
