@@ -67,6 +67,7 @@ public class ImageCapture : MonoBehaviour
     /// </summary>
     public void TapHandler()
     {
+        CreateTagList.Instance.ResetTagList();
         if (!captureIsActive)
         {
             captureIsActive = true;
@@ -181,6 +182,6 @@ public class ImageCapture : MonoBehaviour
         SceneOrganiser.Instance.SetCameraStatus("Ready");
 
         // Stop the capture loop if active
-        CancelInvoke();
+        //CancelInvoke();
     }
 }

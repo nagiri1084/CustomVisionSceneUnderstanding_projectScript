@@ -14,8 +14,7 @@ public class CreateTagList : MonoBehaviour
     private GameObject storeHit;
     public TextMeshPro LabelUiTitle;
     public GameObject LabelPrefeb;
-    //private Transform LabelCreatePos; //Real
-    public Transform LabelCreatePos; //Test
+    public Transform LabelCreatePos;
     [SerializeField] private RaycastHit hit;
     [SerializeField] public RectTransform tagItem;
     [SerializeField] private ScrollRect scroll;
@@ -29,13 +28,11 @@ public class CreateTagList : MonoBehaviour
         // Allows this instance to behave like a singleton 
         Instance = this;
     }
-    private void Start()
-    {
-        //LabelCreatePos = SceneOrganiser.Instance.cursor.transform;//Real
-    }
+
     private void Update()
     {
         rayObject = GameObject.Find("Right_ShellHandRayPointer(Clone)");
+        //rayObject = GameObject.Find("CursorPress");
         if (rayObject)
         {
             if (Physics.Raycast(rayObject.transform.position, rayObject.transform.forward, out hit))
@@ -51,13 +48,23 @@ public class CreateTagList : MonoBehaviour
         }
     }
 
+    public void ResetTagList()
+    {
+
+        foreach (Transform child in scroll.content.gameObject.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+    }
+
     public void AddTagList(List<Prediction> TagList)
     {
-        //CheckText.Instance.SetStatus("AddTagList"); //Real
         if (TagList != null)
         {
+            CheckText.Instance.SetStatus("AddTagList"); //Real
             selectPredictions = TagList;
-            for (int i = 0; i < TagList.Count; i++) 
+            for (int i = 0; i < TagList.Count; i++)
             {
                 var addTagItem = Instantiate(tagItem, scroll.content);
                 addTagItem.anchoredPosition = new Vector2(0, yValue);
@@ -65,7 +72,7 @@ public class CreateTagList : MonoBehaviour
                 GameObject tagItemButtonTexts = addTagItem.transform.GetChild(1).GetChild(0).gameObject;
 
                 tagItemName.GetComponent<Text>().text = TagList[i].tagName + ": " + TagList[i].probability;
-                tagItemButtonTexts.GetComponent<Text>().text = (i+1).ToString();
+                tagItemButtonTexts.GetComponent<Text>().text = (i + 1).ToString();
                 //Debug.Log(yValue);
                 yValue -= 20;
                 //yValue -= addTagItem.sizeDelta.y; ;
@@ -75,23 +82,22 @@ public class CreateTagList : MonoBehaviour
     
     public void SendChooseTag()
     {
-        //CheckText.Instance.SetStatus("SendChooseTag"); //Real
+        CheckText.Instance.SetStatus("SendChooseTag"); //Real
         //Debug.Log(tagIndex-1);
-        if (selectPredictions != null && tagIndex != 0)
+        if (selectPredictions != null)
         {
             storeHit.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex-1].tagName;
-            //CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text); //Real
-            //SceneOrganiser.Instance.FinaliseLabel(selectPredictions[tagIndex - 1]); //Real
-            CreateSelectObject.Instance.InstantiateObject(selectPredictions[tagIndex - 1]);
+            CheckText.Instance.SetStatus(storeHit.transform.gameObject.GetComponent<TextMeshPro>().text); //Real
+            SceneOrganiser.Instance.FinaliseLabel(); //Real
             CheckText.Instance.SetStatus(selectPredictions[tagIndex-1].tagName+", "+selectPredictions[tagIndex-1].probability.ToString()); //Real
         }
     }
 
     public void CreateSelectedObjectLabel()
     {
-        //CheckText.Instance.SetStatus("CreateSelectedObjectLabel"); //Real
-        if (selectPredictions != null && tagIndex != 0)
+        if (selectPredictions != null)
         {
+            //CheckText.Instance.SetStatus("CreateSelectedObjectLabel"); //Real
             GameObject newLabel = Instantiate(LabelPrefeb, LabelCreatePos.position, Quaternion.identity);
             newLabel.GetComponent<TextMeshPro>().text = selectPredictions[tagIndex - 1].tagName;
         }

@@ -8,6 +8,7 @@ using TMPro;
 public class LoadLabelsData : MonoBehaviour
 {
     public bool CreateLabel;
+    public bool CreateObject;
     private StreamReader fileReader;
     char separatorChar = ',';
     public GameObject Label;
@@ -44,24 +45,20 @@ public class LoadLabelsData : MonoBehaviour
                 temp1.transform.gameObject.GetComponent<TextMeshPro>().text = LineName;
                 temp1.transform.position = new Vector3(float.Parse(LinePos[0]), float.Parse(LinePos[1]), float.Parse(LinePos[2]));
 
-                //for (int i = 0; i < tagObjects.Length; i++)
-                //{
-                //    if (tagObjects[i].name == LineName)
-                //    {
-                //        //3D 오브젝트 생성
-                //        GameObject temp2 = Instantiate(tagObjects[i], temp1.transform.position, Quaternion.identity);
-                //        temp2.transform.parent = PrefabRoot.transform;
-                //    }
-                //}
-                for (int i = 0; i < tagLabel.Count; i++)
+                if(CreateObject == true)
                 {
-                    Debug.Log(tagLabel[i]);
-                    if (tagLabel[i] == LineName)
+                    for (int i = 0; i < tagLabel.Count; i++)
                     {
-                        //3D 오브젝트 생성(Resources>Prefabs 파일에 태그 이름과 동일한 프리팹Object가 있어야 실행 가능함)
                         Debug.Log(tagLabel[i]);
-                        GameObject temp2 = Instantiate(Resources.Load("Prefabs/"+tagLabel[i], typeof(GameObject)), temp1.transform.position, Quaternion.identity) as GameObject;
-                        temp2.transform.parent = this.transform;
+                        if (tagLabel[i] == LineName)
+                        {
+                            //3D 오브젝트 생성(Resources>Prefabs 파일에 태그 이름과 동일한 프리팹Object가 있어야 실행 가능함)
+                            Debug.Log(tagLabel[i]);
+                            //GameObject temp2 = Instantiate(Resources.Load("Prefabs/InteriorPrefabs/" + tagLabel[i], typeof(GameObject)), temp1.transform.position, Quaternion.identity) as GameObject;
+                            GameObject temp2 = Instantiate(Resources.Load("Prefabs/StudyRoomPrefabs/" + tagLabel[i], typeof(GameObject)), temp1.transform.position, Quaternion.identity) as GameObject;
+                            //GameObject temp2 = Instantiate(Resources.Load("Prefabs/GymPrefabs/" + tagLabel[i], typeof(GameObject)), temp1.transform.position, Quaternion.identity) as GameObject;
+                            temp2.transform.parent = this.transform;
+                        }
                     }
                 }
             }

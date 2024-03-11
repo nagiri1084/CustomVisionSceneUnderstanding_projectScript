@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System;
 using System.Linq;
 
+//Test용 Script
 public class SplitJsonFile : MonoBehaviour
 {
     /// <summary>
@@ -18,7 +19,8 @@ public class SplitJsonFile : MonoBehaviour
     /// </summary>
     char separatorChar = '"';
     //태그를 받아오는 파일에서 가져올 수는 없을까..?
-    public string[] tagName = new string[] { "chair", "bed", "closet", "dressingTable", "hanger", "shelf", "storageShelf", "table"}; //Interior
+    //Interior
+    public string[] tagName = new string[] { "bed", "chair", "closet", "door", "dressingTable", "hanger", "shelve", "table", "window"}; 
     //public string[] tagName = new string[] { "chair", "shelf", "table", "shelf", "board" }; //StudyRoom
 
     /// <summary>
@@ -43,7 +45,7 @@ public class SplitJsonFile : MonoBehaviour
 
             //textLines = jsonFileData.Split(separatorChar, System.StringSplitOptions.RemoveEmptyEntries);
             textLines.AddRange(jsonFileData.Split(separatorChar));
-            Debug.Log(textLines);
+            //CheckText.Instance.SetStatus(jsonFileData);
 
             for (int i = 0; i < textLines.Count; i++)
             {

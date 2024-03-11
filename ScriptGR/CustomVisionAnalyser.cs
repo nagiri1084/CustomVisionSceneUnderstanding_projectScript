@@ -12,13 +12,16 @@ public class CustomVisionAnalyser : MonoBehaviour
     /// Split JsonFile
     /// </summary>
     char separatorChar = '"';
-    public string[] tagName = new string[] { "3Dprinter", "chair", "laptop", "shelf", "table" };
+    //Interior
+    public string[] tagName = new string[] { "bed", "chair", "closet", "door", "dressingTable", "hanger", "shelve", "table", "window" };
+    //StudyRoom
+    //public string[] tagName = new string[] { "cabinet", "chair", "desk", "table", "shelf", "whiteboard", "wall", "Wall"}; 
 
     /// <summary>
     /// Current threshold accepted for displaying the label
     /// Reduce this value to display the recognition more often
     /// </summary>
-    internal float probabilityThreshold = 0.02f;
+    //internal float probabilityThreshold = 0.02f; //가져올 최소 정확도
 
     /// <summary>
     /// Unique instance of this class
@@ -28,12 +31,14 @@ public class CustomVisionAnalyser : MonoBehaviour
     /// <summary>
     /// Insert your prediction key here
     /// </summary>
+    /// Interial
     private string predictionKey = "616811e1fabf47c6b09180dd83095164";
 
     /// <summary>
     /// Insert your prediction endpoint here
     /// </summary>
-    private string predictionEndpoint = "https://azurecustomvisionproject-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/c2ec8fb0-d34a-4abb-975f-b8e3ca5bee35/detect/iterations/Iteration4/image";
+    /// Interial
+    private string predictionEndpoint = "https://azurecustomvisionproject-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/c4d2308c-97ce-48d0-847f-a98895657f93/detect/iterations/Iteration5/image";
 
     /// <summary>
     /// Bite array of the image to submit for analysis
@@ -83,6 +88,7 @@ public class CustomVisionAnalyser : MonoBehaviour
             string jsonResponse = unityWebRequest.downloadHandler.text;
 
             Debug.Log("response: " + jsonResponse);
+            CheckText.Instance.SetStatus("AnalyseLastImageCaptured");
             CheckText.Instance.SetStatus(jsonResponse);
             SplitJsonFile(jsonResponse);
         }
@@ -161,26 +167,8 @@ public class CustomVisionAnalyser : MonoBehaviour
             sortedPredictions = predictions.OrderByDescending(p => p.probability).ToList();
             CreateTagList.Instance.AddTagList(sortedPredictions);
             CheckText.Instance.SetStatus("FindBestTag");
-            //
-            //Prediction bestPrediction = new Prediction();
-            //bestPrediction = sortedPredictions[0];
-            //
-            //for (int i = 0; i < sortedPredictions.Count; i++)
-            //{
-            //    if (sortedPredictions[i].probability > probabilityThreshold)
-            //    {
-            //        Debug.Log(sortedPredictions[i].tagName + ", " + sortedPredictions[i].probability);
-            //    }
-            //}
-            //CheckText.Instance.SetStatus(sortedPredictions[0].tagName + ", " + sortedPredictions[0].probability);
-            //
-            //if (bestPrediction != null)
-            //{
-            //    SceneOrganiser.Instance.FinaliseLabel(bestPrediction);
-            //    CheckText.Instance.SetStatus(bestPrediction.tagName+", "+bestPrediction.boundingBox.left);
-            //}
-            //else
-            //    CheckText.Instance.SetStatus("analysisRootObject Null");
+
+            SceneOrganiser.Instance.FinaliseLabel(); //Real
         }
     }
 }

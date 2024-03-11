@@ -9,15 +9,14 @@ public class ExportLabelsTextFile : MonoBehaviour
 {
     private StreamWriter fileWriter;
     private GameObject[] LabelList;
-    public Transform Player;
-    private GameObject PlayerRightHand;
-    string[] tagName = new string[] { "Wall", "Background" };
+    //public Transform Player;
+    //private GameObject PlayerRightHand;
 
     public void RecordLabelData()
     {
         //Microsoft HoloLens의 Windows 장치 포털에 있는 지도 관리자 페이지로 경로 설정
-        //var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt"; //Real
-        string filePath = Path.Combine(Application.dataPath, "_output.txt"); //Test
+        var filePath = @"U:\Users\nagir\AppData\Local\Packages\Template3D_pzq3xp76mxafg\LocalState\_output.txt"; //Real
+        //string filePath = Path.Combine(Application.dataPath, "_output.txt"); //Test
         fileWriter = new StreamWriter(filePath);
 
         //Player 이름과 위치 기록
@@ -44,7 +43,7 @@ public class ExportLabelsTextFile : MonoBehaviour
             //학습시켜둔 tag Label만 이름과 위치 데이터 Text파일에 작성
             //string LabelName = LabelTransform.name;
             string LabelName = LabelTransform.gameObject.GetComponent<TextMeshPro>().text;
-            if (Array.Exists(SplitJsonFile.Instance.tagName, x => x == LabelName)==true)
+            if (Array.Exists(CustomVisionAnalyser.Instance.tagName, x => x == LabelName)==true)
             {
                 string LabelPosData = LabelTransform.position.x + "," + LabelTransform.position.y + "," + LabelTransform.position.z;
                 fileWriter.WriteLine(LabelName);

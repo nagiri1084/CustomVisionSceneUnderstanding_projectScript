@@ -220,9 +220,19 @@ public class SceneOrganiser : MonoBehaviour
     }
 
 
+    public void FinaliseLabel()
+    {
+        CheckText.Instance.SetStatus("FinaliseLabel");
+        // Reset the color of the cursor
+        cursor.GetComponent<Renderer>().material.color = Color.green;
+
+        // Stop the analysis process
+        ImageCapture.Instance.ResetImageCapture();
+    }
     /// <summary>
     /// Set the Tags as Text of the last label created. 
     /// </summary>
+    /*
     public void FinaliseLabel(Prediction bestPrediction)
     {
         CheckText.Instance.SetStatus("FinaliseLabel1");
@@ -265,6 +275,7 @@ public class SceneOrganiser : MonoBehaviour
         // Stop the analysis process
         ImageCapture.Instance.ResetImageCapture();
     }
+    */
 
     /// <summary>
     /// This method hosts a series of calculations to determine the position 
