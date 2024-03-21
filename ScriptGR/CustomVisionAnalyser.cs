@@ -13,9 +13,9 @@ public class CustomVisionAnalyser : MonoBehaviour
     /// </summary>
     char separatorChar = '"';
     //Interior
-    public string[] tagName = new string[] { "bed", "chair", "closet", "door", "dressingTable", "hanger", "shelve", "table", "window" };
+    //public string[] tagName = new string[] { "bed", "chair", "closet", "door", "dressingTable", "hanger", "shelve", "table", "window" };
     //StudyRoom
-    //public string[] tagName = new string[] { "cabinet", "chair", "desk", "table", "shelf", "whiteboard", "wall", "Wall"}; 
+    public string[] tagName = new string[] { "3Dprinter", "cabinet", "chair", "desk", "drill", "laptop", "table", "shelf", "toolbox", "whiteboard", "Wall", "Floor"}; 
 
     /// <summary>
     /// Current threshold accepted for displaying the label
@@ -38,7 +38,7 @@ public class CustomVisionAnalyser : MonoBehaviour
     /// Insert your prediction endpoint here
     /// </summary>
     /// Interial
-    private string predictionEndpoint = "https://azurecustomvisionproject-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/c4d2308c-97ce-48d0-847f-a98895657f93/detect/iterations/Iteration5/image";
+    private string predictionEndpoint = "https://azurecustomvisionproject-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/c2ec8fb0-d34a-4abb-975f-b8e3ca5bee35/detect/iterations/Iteration7/image";
 
     /// <summary>
     /// Bite array of the image to submit for analysis
